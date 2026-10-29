@@ -1,0 +1,419 @@
+/* ==========================================
+   STEP 3 · CSS พื้นฐาน: สี ฟอนต์ ตัวแปร
+   ธีม: JDM Car Collection (ถนนยามค่ำคืน + ไฟท้ายแดง)
+   ========================================== */
+
+/* ตัวแปรสี (เปลี่ยนที่เดียว เปลี่ยนทั้งเว็บ) */
+:root {
+  --paper: #0e1015;   /* พื้นหลังหลัก: ยางมะตอยตอนกลางคืน */
+  --card: #171b24;    /* สีการ์ด: เหล็กเข้ม */
+  --ink: #f4f1ea;     /* ตัวอักษรหลัก: ขาวนวลเหมือนสีรถ Pearl White */
+  --muted: #9aa1ad;   /* ตัวอักษรรอง: เทาโครเมียม */
+  --red: #e8112d;     /* สีเน้น: แดงพระอาทิตย์ขึ้น / ไฟท้าย */
+  --line: rgba(244, 241, 234, 0.14); /* เส้นขอบบาง ๆ */
+
+  --font-display: 'Racing Sans One', 'Russo One', Impact, sans-serif;
+  --font-body: 'Anuphan', Tahoma, sans-serif;
+  --font-mono: 'Chakra Petch', 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/* ให้ width รวม padding และ border เสมอ (Box Model) */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+a {
+  color: inherit;
+}
+
+/* เห็นกรอบโฟกัสชัดเมื่อใช้คีย์บอร์ด */
+a:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ป้ายตัวเล็กเหนือหัวข้อ (เช่น ปีรุ่น / รหัสตัวถัง) */
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+/* ==========================================
+   STEP 4 · Header และเมนู ด้วย Flexbox
+   ========================================== */
+.site-header {
+  display: flex;
+  flex-direction: column;   /* มือถือ: เรียงแนวตั้ง */
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--card);
+  color: var(--ink);
+  border-bottom: 3px solid var(--red);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  font-style: italic;        /* เอียงให้ดูมีความเร็ว */
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--red);
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;           /* ที่ไม่พอให้ขึ้นบรรทัดใหม่ */
+  gap: 8px;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 16px;
+  min-height: 44px;          /* ปุ่มใหญ่พอให้นิ้วกด */
+  border: 1px solid var(--line);
+  border-radius: 4px;        /* มุมเหลี่ยมเล็กน้อย เหมือนป้ายทะเบียน */
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.menu a.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+/* ==========================================
+   STEP 5 · บทนำ + Typography
+   ========================================== */
+.intro {
+  max-width: 1200px;
+  margin: 0 auto;            /* จัดกล่องไว้กลางจอ */
+  padding: 40px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 0.9;
+  overflow-wrap: anywhere;   /* คำยาวเกินจอให้ตัดบรรทัดได้ */
+}
+
+.lead {
+  max-width: 60ch;           /* บรรทัดไม่ยาวเกินไป อ่านง่าย */
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.filters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filters a {
+  display: block;
+  padding: 6px 14px;
+  border: 2px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.filters a.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* ==========================================
+   STEP 6 · การ์ดแกลเลอรี + รูปภาพ
+   ========================================== */
+
+/* รูปไม่ล้นกล่อง (Flexible Images) */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 56px;
+}
+
+.section-title {
+  margin-bottom: 16px;
+  font-size: 22px;
+}
+
+/* มือถือ: 1 คอลัมน์ (Mobile-first) */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.card {
+  margin: 0;                 /* figure มี margin มาให้ ต้องล้างออก */
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--red);  /* เส้นแดงบนการ์ด เหมือนแถบสีบนตัวรถ */
+  border-radius: 4px;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;       /* ทุกรูปสัดส่วนเท่ากัน */
+  object-fit: cover;         /* ตัดรูปให้เต็มกรอบ ไม่บิดเบี้ยว */
+}
+
+.card figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 12px 4px 4px;
+}
+
+/* รหัสรุ่น / ตัวถัง เช่น R34, FD3S, AE86 */
+.no {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.card h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.card p {
+  width: 100%;
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ==========================================
+   STEP 7 · รถเด่น (Featured)
+   ========================================== */
+.featured {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  gap: 20px;
+}
+
+.featured img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.featured-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--red);
+  border-radius: 4px;
+}
+
+.featured-text h2 {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.featured-text p {
+  margin: 0;
+}
+
+/* สเปกรถ เช่น แรงม้า / แรงบิด / น้ำหนัก */
+.meta {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.meta li {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.meta b {
+  display: block;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.site-footer {
+  padding: 24px 20px;
+  background: var(--card);
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* ==========================================
+   STEP 8 · Responsive ด้วย Media Queries
+   เขียนแบบ Mobile-first: ค่าด้านบนคือมือถือ
+   แล้วเพิ่มของสำหรับจอใหญ่ทีละขั้น
+   ========================================== */
+
+/* แท็บเล็ต: 768px ขึ้นไป */
+@media (min-width: 768px) {
+  .site-header {
+    flex-direction: row;               /* เมนูมาอยู่แถวเดียวกับโลโก้ */
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+  }
+
+  .intro,
+  .featured,
+  .gallery {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;    /* 2 คอลัมน์ */
+  }
+
+  .featured {
+    grid-template-columns: 1fr 1fr;    /* รูปซ้าย ข้อความขวา */
+  }
+
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 40px;
+  }
+}
+
+/* เดสก์ท็อป: 1024px ขึ้นไป */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);   /* 3 คอลัมน์ */
+    gap: 28px;
+  }
+
+  .featured {
+    grid-template-columns: 5fr 7fr;
+  }
+
+  .featured-text {
+    justify-content: center;
+    padding: 48px;
+  }
+}
+
+/* ==========================================
+   STEP 9 · เก็บรายละเอียด
+   ========================================== */
+
+/* แถบเรซซิ่งแดง-ขาว (ใช้ class เดิม .striker) */
+.striker {
+  height: 14px;
+  background: linear-gradient(
+    90deg,
+    var(--red) 0 60%,
+    var(--ink) 60% 70%,
+    var(--red) 70% 100%
+  );
+}
+
+/* หัวข้อใหญ่ขึ้นตามความกว้างจอ แต่มีค่าต่ำสุด–สูงสุด */
+.intro h1 {
+  font-size: clamp(56px, 12vw, 168px);
+}
+
+/* hover เฉพาะอุปกรณ์ที่มีเมาส์ */
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 0 var(--red);
+  }
+
+  .menu a:hover,
+  .filters a:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+}
+
+/* เคารพผู้ใช้ที่ตั้งค่าลดการเคลื่อนไหว */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
